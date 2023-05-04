@@ -20,7 +20,11 @@ This document summarizes all the programming languages I found implementing Alge
 * ==Zero-cost Effect Handlers by Staging (Technical Report)==: https://ps.informatik.uni-tuebingen.de/publications/schuster19zero.pdf
 * Shallow Effect Handlers: https://homepages.inf.ed.ac.uk/slindley/papers/shallow-extended.pdf
 * Suggest supporting algebraic effects #dart: https://www.reddit.com/r/dartlang/comments/xzu55m/suggest_supporting_algebraic_effects/
-
+* Do Be Do Be Do: https://arxiv.org/pdf/1611.09259.pdf -- Frank programming language implementing Effect Handlers
+* Abstraction-Safe Effect Handlers via Tunneling: https://dl.acm.org/doi/pdf/10.1145/3290318
+* https://github.com/lampepfl/dotty/pull/16626
+* The error model: https://joeduffyblog.com/2016/02/07/the-error-model/
+	
 ### Programming Languages
 
 * Helium: https://github.com/Helium4Haskell/helium #investigate #daan-leijen #haskell #functional (last commit on 2019)
@@ -50,6 +54,7 @@ This document summarizes all the programming languages I found implementing Alge
 	* effing-mad: https://github.com/rosefromthedead/effing-mad
 	* https://github.com/withoutboats/fehler
 * Ante: http://antelang.org/
+* [[Unison]]
 
 ## Proposals
 
