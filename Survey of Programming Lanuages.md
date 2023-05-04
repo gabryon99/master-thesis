@@ -54,7 +54,7 @@ This document summarizes all the programming languages I found implementing Alge
 	* effing-mad: https://github.com/rosefromthedead/effing-mad
 	* https://github.com/withoutboats/fehler
 * Ante: http://antelang.org/
-* [[Unison]]
+* [[Unison]]: this programming language implements effects using the concept of **abilities**
 
 ## Proposals
 
