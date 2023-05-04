@@ -55,6 +55,7 @@ This document summarizes all the programming languages I found implementing Alge
 	* https://github.com/withoutboats/fehler
 * Ante: http://antelang.org/
 * [[Unison]]: this programming language implements effects using the concept of **abilities**
+* The [Genus](https://www.cs.cornell.edu/projects/genus/) programming language
 
 ---
 
