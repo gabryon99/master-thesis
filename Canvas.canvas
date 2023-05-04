@@ -1,0 +1,14 @@
+{
+	"nodes":[
+		{"type":"link","url":"https://github.com/dart-lang/language/issues/2567","id":"27108b8b1111e989","x":-620,"y":-140,"width":660,"height":1200},
+		{"type":"link","url":"https://overreacted.io/algebraic-effects-for-the-rest-of-us/","id":"fc0145627fa23cb8","x":85,"y":-140,"width":635,"height":1200},
+		{"type":"text","text":"# Ideas","id":"fa7da1158f3ae2a8","x":153,"y":-520,"width":250,"height":60,"color":"1"},
+		{"type":"link","url":"https://nomisrev.github.io/continuation-monad-in-kotlin/","id":"8f842653d80d55b2","x":-690,"y":-1040,"width":550,"height":620},
+		{"id":"4bf07dc04157a621","x":-490,"y":1220,"width":400,"height":400,"type":"link","url":"https://www.yld.io/blog/continuations-coroutines-fibers-effects/"}
+	],
+	"edges":[
+		{"id":"cf24854e224d6272","fromNode":"fa7da1158f3ae2a8","fromSide":"bottom","toNode":"27108b8b1111e989","toSide":"top"},
+		{"id":"96075b40e07bdc43","fromNode":"fa7da1158f3ae2a8","fromSide":"bottom","toNode":"fc0145627fa23cb8","toSide":"top"},
+		{"id":"962173ea2e050f04","fromNode":"fa7da1158f3ae2a8","fromSide":"left","toNode":"8f842653d80d55b2","toSide":"right"}
+	]
+}
