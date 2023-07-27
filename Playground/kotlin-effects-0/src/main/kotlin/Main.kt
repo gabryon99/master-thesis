@@ -20,10 +20,8 @@ suspend fun main(args: Array<String>) {
     val evenNumbers = listOf(2, 4, 6, 8, 10)
     var outputList = listOf<Int>()
 
-    handle<_, _, MapYield<Int, Int>, MapYieldHandler<Int, Int>> {
-        outputList = map(evenNumbers) {
-            return@map MapYield<Int, Int>().perform(it)
-        }
+    handle<MapYield<Int, Int>, _, _, _> {
+        outputList = map(evenNumbers) { MapYield<Int, Int>().perform(it) }
         return@handle 0
     } with {_, value ->
         resume(value * 2)
