@@ -1,5 +1,7 @@
 package effect
 
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.contract
 import kotlin.coroutines.Continuation
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -35,5 +37,5 @@ class EffectScope<A, R, E: Effect<A, R>, EH : EffectHandler<A, R, E>>(val lambda
     }
 }
 
-fun <A, R, E: Effect<A, R>, EH: EffectHandler<A, R, E>> handle(lambda: suspend context(EH) () -> R): EffectScope<A, R, E, EH> =
+fun <E: Effect<A, R>, EH: EffectHandler<A, R, E>, A, R> handle(lambda: suspend context(EH) () -> R): EffectScope<A, R, E, EH> =
     EffectScope(lambda)
