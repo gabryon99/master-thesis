@@ -1,5 +1,7 @@
 @file:Suppress("UNCHECKED_CAST")
+/*
 
+import effects.*
 import java.io.PrintStream
 import java.net.URI
 import java.net.http.HttpClient
@@ -26,13 +28,6 @@ val throwEff = Effect.CanThrow<Int>()
 // 2. How do I combine effect handlers? Like a union of them? ✅
 // 3. Resumption can be forgotten! Is this intentional tough?
 
-val ImplicitHandler: FunEffectHandler = {
-    UNHANDLED
-}
-
-val ForwardHandler: FunEffectHandler = {
-    forward(it)
-}
 
 fun buildPrintOutputHandler(stream: PrintStream, prefix: String = ""): FunEffectHandler = {
     when (it) {
@@ -40,7 +35,6 @@ fun buildPrintOutputHandler(stream: PrintStream, prefix: String = ""): FunEffect
             stream.print(prefix)
             stream.println(it.message)
             resume(Unit)
-            println("After `resume`")
         }
         else -> UNHANDLED
     }
@@ -77,7 +71,9 @@ fun example0() {
 
     println(handled)
 }
+*/
 
+/*
 fun example1() {
 
     val message = "Hello Kotlin! 👋"
@@ -87,6 +83,16 @@ fun example1() {
     // This will be printed in red
     handle { printlnEff(message) } with stdErrorHandler
 
+}
+
+fun example1_a() {
+
+    val message = "Hello Kotlin! 👋"
+    val value = handle { printlnEff(message) } with {
+        return@with 42
+    }
+
+    println(value)
 }
 
 fun example_1b() {
@@ -107,7 +113,7 @@ fun example2() {
                 storage[it.key as String] = it.value as String
                 resume(Unit)
             }
-            else -> {}
+            else -> UNHANDLED
         }
     }
 
@@ -364,8 +370,8 @@ fun example12() {
 
 data class Solution(val first: Int, val second: Int, val third: Int)
 
-val flip = Effect.Flip()
-fun <A> fail() = Effect.Fail<A>()
+val flip = Effect.Flip
+fun <A> fail() = Effect.Fail<A>("")
 
 fun choice(n: Int): Int = (handle {
     if (n < 1) {
@@ -380,5 +386,5 @@ fun choice(n: Int): Int = (handle {
 } with ForwardHandler) as Int
 
 
-
+*/
 //endregion
