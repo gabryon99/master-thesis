@@ -1,9 +1,12 @@
+import TestUtilities.printlnEff
 import effects.*
 import java.io.PrintStream
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
 
 object TestUtilities {
+    val printlnEff = Effect.Println()
+
     fun <R> buildPrintOutputHandler(stream: PrintStream, prefix: String = ""): FunEffectHandler<R> = {
         when (it) {
             is Effect.Println -> {
