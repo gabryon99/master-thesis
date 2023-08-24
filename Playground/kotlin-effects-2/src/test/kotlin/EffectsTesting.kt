@@ -5,11 +5,11 @@ import kotlin.test.Test
 import kotlin.test.assertFailsWith
 
 object TestUtilities {
-    val printlnEff = Effect.Println()
+    val printlnEff = Println()
 
     fun <R> buildPrintOutputHandler(stream: PrintStream, prefix: String = ""): FunEffectHandler<R> = {
         when (it) {
-            is Effect.Println -> {
+            is Println -> {
                 stream.print(prefix)
                 stream.println(it.message)
                 resume(Unit)
@@ -55,7 +55,7 @@ class EffectsTesting {
         handle h1@ {
 
             forwardHandle h2@ {
-                val value = perform(Effect.Yield<Int>())
+                val value = perform(Yield<Int>())
                 println("I've got a: $value")
                 return@h2
             }
@@ -71,11 +71,11 @@ class EffectsTesting {
     fun `The Yield effect`() {
         var counter = 0
         handle {
-            assert(perform(Effect.Yield<Int>()) == 1)
-            assert(perform(Effect.Yield<Int>()) == 2)
+            assert(perform(Yield<Int>()) == 1)
+            assert(perform(Yield<Int>()) == 2)
         } with {
             when (it) {
-                is Effect.Yield<*> -> {
+                is Yield<*> -> {
                     counter += 1
                     resume(counter)
                 }
@@ -96,7 +96,7 @@ class EffectsTesting {
 
             val n = ":)".toIntOrNull()
             if (n == null) {
-                 perform(Effect.Fail<Int>("Cannot convert String to Int"))
+                 perform(Fail<Int>("Cannot convert String to Int"))
             }
             else {
                 return@h1 n
@@ -104,7 +104,7 @@ class EffectsTesting {
 
         } with {
             when (it) {
-                is Effect.Fail<*> -> {
+                is Fail<*> -> {
                     debug(it.message)
                     return@with 0
                 }
@@ -118,13 +118,16 @@ class EffectsTesting {
     @Test
     fun `The Next effect`() {
 
+        // interface Effect<R>
+        // class A: Effect<R>
+
         val result = handle {
-            val a = perform(Effect.Next).toInt()
+            val a = perform(Next).toInt()
             println(a)
             return@handle a
         } with w@ {
             return@w when (it) {
-                is Effect.Next -> {
+                is Next -> {
                     resume("42")
                 }
                 else -> unhandled()
@@ -140,7 +143,7 @@ class EffectsTesting {
             handle {
 
                 var x = 0
-                if (perform(Effect.Choice)) {
+                if (perform(Choice)) {
                     x = 2
                 }
                 else {
