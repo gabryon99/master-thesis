@@ -1,11 +1,13 @@
 import effects.*
 import org.junit.jupiter.api.Test
 
+object Next: Effect<String>
+
 object Read: Effect<String>
 
-class Print(val msg: String): Effect<Unit>
-
 object Fail: Effect<Unit>
+
+class Print(val msg: String): Effect<Unit>
 
 class EffectsTesting {
 
@@ -98,6 +100,25 @@ class EffectsTesting {
         }
 
         handle(abc) with reverseHandler
+    }
+
+    @Test
+    fun `The Next effect`() {
+
+        val result = handle {
+            val a = perform(Next).toInt()
+            println(a)
+            a
+        } with {
+            when (it) {
+                is Next -> {
+                    resume("42")
+                }
+                else -> unhandled()
+            }
+        }
+
+        assert(result == 42)
     }
 
 }

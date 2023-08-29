@@ -28,7 +28,7 @@ class EffectHandlerImpl<R>(
 
     private var didResume: Boolean = false
 
-    override fun invokeHandler(effect: Effect<*>) {
+    fun invokeHandler(effect: Effect<*>) {
         status = EffectHandlerStatus.HANDLING
 
         val effLambda: suspend () -> R? = {
