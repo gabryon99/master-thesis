@@ -65,8 +65,13 @@ class EffectfulScope<R>(
     }
 
     internal fun unwrapResult(): Result<R?> {
-        assert(status == EffectfulFunctionStatus.COMPUTED)
+        assert(status == EffectfulFunctionStatus.COMPUTED || status == EffectfulFunctionStatus.ABORTED)
         return completionWrapper.result!!
+    }
+
+    internal fun abortComputation(result: Result<R?>) {
+        this.completionWrapper.result = result
+        this.status = EffectfulFunctionStatus.ABORTED
     }
 
     infix fun with(effectHandler: EffectHandlerFunction<R>): R? {
@@ -83,8 +88,7 @@ class EffectfulScope<R>(
                     invokeEffectHandler(effectHandler)
                 }
                 status == EffectfulFunctionStatus.ABORTED -> {
-                    val topHandler = effectHandlerStack.peek() as EffectHandlerImpl
-                    return topHandler.unwrapResult().getOrNull()
+                    return unwrapResult().getOrNull()
                 }
                 status == EffectfulFunctionStatus.COMPUTED && !effectHandlerStack.empty() -> {
                     // If the effect handler stack is not empty,

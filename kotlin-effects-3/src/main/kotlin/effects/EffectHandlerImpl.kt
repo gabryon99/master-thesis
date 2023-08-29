@@ -1,5 +1,6 @@
 package effects
 
+import effects.exceptions.AlreadyResumedException
 import kotlin.coroutines.*
 
 class EffectHandlerImpl<R>(
@@ -12,6 +13,7 @@ class EffectHandlerImpl<R>(
         INITIAL,
         HANDLING,
         SUSPENDED,
+        RESUMED,
         DONE;
     }
 
@@ -23,6 +25,8 @@ class EffectHandlerImpl<R>(
     private var result: Result<R?>? = null
 
     private var status = EffectHandlerStatus.INITIAL
+
+    private var didResume: Boolean = false
 
     override fun invokeHandler(effect: Effect<*>) {
         status = EffectHandlerStatus.HANDLING
@@ -36,6 +40,14 @@ class EffectHandlerImpl<R>(
     }
 
     override suspend fun <T> resume(input: T): R? {
+
+        if (status == EffectHandlerStatus.RESUMED) {
+            throw AlreadyResumedException("Continuations are linear, therefore you can resume them at least once.")
+        }
+
+        status = EffectHandlerStatus.RESUMED
+        didResume = true
+
         // Resume the effectful function computation
         // where it was stopped.
         effectfulFunContinuation.resume(input)
@@ -60,17 +72,16 @@ class EffectHandlerImpl<R>(
     }
 
     override fun resumeWith(result: Result<R?>) {
+
         this.result = result
+        this.status = EffectHandlerStatus.DONE
 
         // The effect handler computation ended without resumption.
         // We abort the execution of the effectful function.
-        if (this.status == EffectHandlerStatus.HANDLING) {
-            this.status = EffectHandlerStatus.DONE
-            effectfulScope.status = EffectfulScope.EffectfulFunctionStatus.ABORTED
-        }
-        else {
-            this.status = EffectHandlerStatus.DONE
+        if (didResume) {
             effectfulScope.dismissEffectHandler(this)
+        } else {
+            effectfulScope.abortComputation(result)
         }
     }
 
